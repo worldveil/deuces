@@ -20,8 +20,8 @@ class Evaluator(object):
         
         self.hand_size_map = {
             5 : self._five,
-            6 : self._six,
-            7 : self._seven
+            6 : self._more_than_five,
+            7 : self._more_than_five
         }
 
     def evaluate(self, cards, board):
@@ -30,6 +30,13 @@ class Evaluator(object):
 
         Supports empty board, etc very flexible. No input validation 
         because that's cycles!
+        """
+        return self.best_hand(cards, board)[0]
+
+    def best_hand(self, cards, board):
+        """
+        Like evaluate, except that both the rank and the 5 cards that
+        make up the best possible hand are returned togther as a tuple.
         """
         all_cards = cards + board
         return self.hand_size_map[len(all_cards)](all_cards)
@@ -46,46 +53,31 @@ class Evaluator(object):
         if cards[0] & cards[1] & cards[2] & cards[3] & cards[4] & 0xF000:
             handOR = (cards[0] | cards[1] | cards[2] | cards[3] | cards[4]) >> 16
             prime = Card.prime_product_from_rankbits(handOR)
-            return self.table.flush_lookup[prime]
+            return self.table.flush_lookup[prime], cards
 
         # otherwise
         else:
             prime = Card.prime_product_from_hand(cards)
-            return self.table.unsuited_lookup[prime]
+            return self.table.unsuited_lookup[prime], cards
 
-    def _six(self, cards):
+    def _more_than_five(self, cards):
         """
-        Performs five_card_eval() on all (6 choose 5) = 6 subsets
-        of 5 cards in the set of 6 to determine the best ranking, 
-        and returns this ranking.
-        """
-        minimum = LookupTable.MAX_HIGH_CARD
-
-        all5cardcombobs = itertools.combinations(cards, 5)
-        for combo in all5cardcombobs:
-
-            score = self._five(combo)
-            if score < minimum:
-                minimum = score
-
-        return minimum
-
-    def _seven(self, cards):
-        """
-        Performs five_card_eval() on all (7 choose 5) = 21 subsets
-        of 5 cards in the set of 7 to determine the best ranking, 
-        and returns this ranking.
+        Performs five_card_eval() on all subsets of 5 cards in the set to
+        determine the best ranking, and returns this ranking and the
+        hand itself.
         """
         minimum = LookupTable.MAX_HIGH_CARD
+        best_hand = None
 
-        all5cardcombobs = itertools.combinations(cards, 5)
-        for combo in all5cardcombobs:
-            
-            score = self._five(combo)
+        all5cardcombos = itertools.combinations(cards, 5)
+        for combo in all5cardcombos:
+
+            score, hand = self._five(combo)
             if score < minimum:
                 minimum = score
+                best_hand = combo
 
-        return minimum
+        return minimum, best_hand
 
     def get_rank_class(self, hr):
         """
