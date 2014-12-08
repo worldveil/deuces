@@ -155,15 +155,17 @@ class Evaluator(object):
                 print "Player %d hand = %s, percentage rank among all hands = %f" % (counter, class_string, percentage)
 
                 counter += 1
+            winner = [j+1 for j, r in enumerate(ranks) if r == min(ranks)]
 
-            winner = ranks.index(min(ranks)) + 1
             if i != 2:
-                print "Player %d hand is currently winning." % winner
+                print "Player %d hand is currently winning." % winner[0]
             else:
                 print
                 print ("=" * line_length) + " HAND OVER " + ("=" * line_length) 
-                print "Player %d is the winner with a %s" % (winner, self.class_to_string(self.get_rank_class(self.evaluate(hands[winner-1], board))))
-            
+                if len(winner)==1:
+                    print "Player %d is the winner with a %s" % (winner[0], self.class_to_string(self.get_rank_class(self.evaluate(hands[winner[0]-1], board))))
+                else:
+                    print 'Winners are Player %s with a %s' % (', Player '.join(map(str, winner)), self.class_to_string(self.get_rank_class(self.evaluate(hands[winner[0]-1], board))))
             print
 
 
