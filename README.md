@@ -4,6 +4,12 @@ Deuces
 A pure Python poker hand evaluation library
 
     [ 2 ❤ ] , [ 2 ♠ ]
+    
+## Installation
+
+```
+$ pip install deuces
+```
 
 ## Implementation notes
 
