@@ -92,7 +92,7 @@ class Evaluator(object):
         Returns the class of hand given the hand hand_rank
         returned from evaluate. 
         """
-        if hr >= 0 and hr < LookupTable.MAX_STRAIGHT_FLUSH:
+        if hr >= 0 and hr <= LookupTable.MAX_STRAIGHT_FLUSH:
             return LookupTable.MAX_TO_RANK_CLASS[LookupTable.MAX_STRAIGHT_FLUSH]
         elif hr <= LookupTable.MAX_FOUR_OF_A_KIND:
             return LookupTable.MAX_TO_RANK_CLASS[LookupTable.MAX_FOUR_OF_A_KIND]
