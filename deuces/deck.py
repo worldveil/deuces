@@ -1,3 +1,5 @@
+from __future__ import absolute_import
+
 from random import shuffle
 from .card import Card
 
@@ -36,7 +38,7 @@ class Deck:
 
         # create the standard 52 card deck
         for rank in Card.STR_RANKS:
-            for suit,val in list(Card.CHAR_SUIT_TO_INT_SUIT.items()):
+            for suit,val in Card.CHAR_SUIT_TO_INT_SUIT.items():
                 Deck._FULL_DECK.append(Card.new(rank + suit))
 
         return list(Deck._FULL_DECK)

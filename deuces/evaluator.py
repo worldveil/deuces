@@ -1,3 +1,5 @@
+from __future__ import absolute_import, print_function
+
 import itertools
 from .card import Card
 from .deck import Deck

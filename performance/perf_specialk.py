@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 import time
 from SevenEval import SevenEval
 from FiveEval import FiveEval

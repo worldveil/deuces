@@ -1,5 +1,14 @@
+from __future__ import absolute_import, division
+
 import itertools
 from .card import Card
+
+
+try:
+    xrange
+except NameError:
+    xrange = range
+
 
 class LookupTable(object):
     """
@@ -100,7 +109,7 @@ class LookupTable(object):
 
         # 1277 = number of high cards
         # 1277 + len(str_flushes) is number of hands with all cards unique rank
-        for i in range(1277 + len(straight_flushes) - 1): # we also iterate over SFs
+        for i in xrange(1277 + len(straight_flushes) - 1): # we also iterate over SFs
             # pull the next flush pattern from our generator
             f = next(gen)
 
@@ -252,7 +261,7 @@ class LookupTable(object):
         Writes lookup table to disk
         """
         with open(filepath, 'w') as f:
-            for prime_prod, rank in list(table.items()):
+            for prime_prod, rank in table.items():
                 f.write(str(prime_prod) +","+ str(rank) + '\n')
 
     def get_lexographically_next_bit_sequence(self, bits):

@@ -1,3 +1,6 @@
+from __future__ import unicode_literals, print_function
+
+
 class Card ():
     """
     Static class that handles cards. We represent cards as 32-bit integers, so 
