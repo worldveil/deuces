@@ -1,5 +1,6 @@
-from random import shuffle
-from card import Card
+from random import shuffle as rshuffle
+from .card import Card
+
 
 class Deck:
     """
@@ -15,7 +16,7 @@ class Deck:
     def shuffle(self):
         # and then shuffle
         self.cards = Deck.GetFullDeck()
-        shuffle(self.cards)
+        rshuffle(self.cards)
 
     def draw(self, n=1):
         if n == 1:
@@ -36,7 +37,7 @@ class Deck:
 
         # create the standard 52 card deck
         for rank in Card.STR_RANKS:
-            for suit,val in Card.CHAR_SUIT_TO_INT_SUIT.iteritems():
+            for suit, val in Card.CHAR_SUIT_TO_INT_SUIT.items():
                 Deck._FULL_DECK.append(Card.new(rank + suit))
 
         return list(Deck._FULL_DECK)
