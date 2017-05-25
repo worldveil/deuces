@@ -1,30 +1,40 @@
-from random import shuffle
+from random import shuffle, random
 from card import Card
+
 
 class Deck:
     """
-    Class representing a deck. The first time we create, we seed the static 
+    Class representing a deck. The first time we create, we seed the static
     deck with the list of unique card integers. Each object instantiated simply
-    makes a copy of this object and shuffles it. 
+    makes a copy of this object and shuffles it.
+
+    The state of a deck is defined by the random float [0.0, 1.0) used to seed
+    the shuffle() operation, combined with the number of cards that have
+    already been drawn.
     """
     _FULL_DECK = []
 
-    def __init__(self):
-        self.shuffle()
+    def __init__(self, seed=None, num_drawn=0):
+        if not seed:
+            seed = random()
+        self.seed = seed
+        self.shuffle(seed)
 
-    def shuffle(self):
+        self.num_drawn = 0
+        if num_drawn:
+            self.draw(num_drawn)
+
+    def shuffle(self, seed):
         # and then shuffle
         self.cards = Deck.GetFullDeck()
-        shuffle(self.cards)
+        shuffle(self.cards, lambda: seed)
 
     def draw(self, n=1):
+        self.num_drawn += n
         if n == 1:
             return self.cards.pop(0)
 
-        cards = []
-        for i in range(n):
-            cards.append(self.draw())
-        return cards
+        return [self.cards.pop(0) for _ in range(n)]
 
     def __str__(self):
         return Card.print_pretty_cards(self.cards)
@@ -36,7 +46,7 @@ class Deck:
 
         # create the standard 52 card deck
         for rank in Card.STR_RANKS:
-            for suit,val in Card.CHAR_SUIT_TO_INT_SUIT.iteritems():
+            for suit, val in Card.CHAR_SUIT_TO_INT_SUIT.iteritems():
                 Deck._FULL_DECK.append(Card.new(rank + suit))
 
         return list(Deck._FULL_DECK)
