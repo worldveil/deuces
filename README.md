@@ -1,5 +1,6 @@
 Deuces
 ========
+blah blah
 A pure Python poker hand evaluation library
 
     [ 2 ❤ ] , [ 2 ♠ ]
