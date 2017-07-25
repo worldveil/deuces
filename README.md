@@ -4,7 +4,7 @@ Deuces
 A pure Python poker hand evaluation library
 
     [ 2 ❤ ] , [ 2 ♠ ]
-    
+
 ## Installation
 
 ```
@@ -15,23 +15,23 @@ $ pip install deuces
 
 Deuces, originally written for the MIT Pokerbots Competition, is lightweight and fast. All lookups are done with bit arithmetic and dictionary lookups. That said, Deuces won't beat a C implemenation (~250k eval/s) but it is useful for situations where Python is required or where bots are allocated reasonable thinking time (human time scale).
 
-Deuces handles 5, 6, and 7 card hand lookups. The 6 and 7 card lookups are done by combinatorially evaluating the 5 card choices, but later releases may have dedicated and faster algorithms for these. 
+Deuces handles 5, 6, and 7 card hand lookups. The 6 and 7 card lookups are done by combinatorially evaluating the 5 card choices, but later releases may have dedicated and faster algorithms for these.
 
-I also have lookup tables for 2 card rollouts, which is particularly handy in evaluating Texas Hold'em preflop pot equity, but they are forthcoming as well. 
+I also have lookup tables for 2 card rollouts, which is particularly handy in evaluating Texas Hold'em preflop pot equity, but they are forthcoming as well.
 
 See my blog for an explanation of how the library works and how the lookup table generation is done:
 http://willdrevo.com/ (haven't posted yet)
 
 ## Usage
 
-Deuces is easy to set up and use. 
+Deuces is easy to set up and use.
 
 ```python
 >>> from deuces import Card
 >>> card = Card.new('Qh')
 ```
 
-Card objects are represented as integers to keep Deuces performant and lightweight. 
+Card objects are represented as integers to keep Deuces performant and lightweight.
 
 Now let's create the board and an example Texas Hold'em hand:
 
@@ -47,22 +47,22 @@ Now let's create the board and an example Texas Hold'em hand:
 >>> ]
 ```
 
-Pretty print card integers to the terminal: 
+Pretty print card integers to the terminal:
 
     >>> Card.print_pretty_cards(board + hand)
-      [ A ❤ ] , [ K ♦ ] , [ J ♣ ] , [ Q ♠ ] , [ T ❤ ] 
+      [ A ❤ ] , [ K ♦ ] , [ J ♣ ] , [ Q ♠ ] , [ T ❤ ]
 
-If you have [`termacolor`](http://pypi.python.org/pypi/termcolor) installed, they will be colored as well. 
+If you have [`termacolor`](http://pypi.python.org/pypi/termcolor) installed, they will be colored as well.
 
 Otherwise move straight to evaluating your hand strength:
 ```python
 >>> from deuces import Evaluator
 >>> evaluator = Evaluator()
->>> print evaluator.evaluate(board, hand)
+>>> print(evaluator.evaluate(board, hand))
 1600
 ```
 
-Hand strength is valued on a scale of 1 to 7462, where 1 is a Royal Flush and 7462 is unsuited 7-5-4-3-2, as there are only 7642 distinctly ranked hands in poker. Once again, refer to my blog post for a more mathematically complete explanation of why this is so. 
+Hand strength is valued on a scale of 1 to 7462, where 1 is a Royal Flush and 7462 is unsuited 7-5-4-3-2, as there are only 7642 distinctly ranked hands in poker. Once again, refer to my blog post for a more mathematically complete explanation of why this is so.
 
 If you want to deal out cards randomly from a deck, you can also do that with Deuces:
 ```python
@@ -77,9 +77,9 @@ and print them:
     >>> Card.print_pretty_cards(board)
       [ 4 ♣ ] , [ A ♠ ] , [ 5 ♦ ] , [ K ♣ ] , [ 2 ♠ ]
     >>> Card.print_pretty_cards(player1_hand)
-      [ 6 ♣ ] , [ 7 ❤ ] 
+      [ 6 ♣ ] , [ 7 ❤ ]
     >>> Card.print_pretty_cards(player2_hand)
-      [ A ♣ ] , [ 3 ❤ ] 
+      [ A ♣ ] , [ 3 ❤ ]
 
 Let's evaluate both hands strength, and then bin them into classes, one for each hand type (High Card, Pair, etc)
 ```python
@@ -90,10 +90,10 @@ Let's evaluate both hands strength, and then bin them into classes, one for each
 ```
 or get a human-friendly string to describe the score,
 
-    >>> print "Player 1 hand rank = %d (%s)\n" % (p1_score, evaluator.class_to_string(p1_class))
+    >>> print("Player 1 hand rank = %d (%s)\n" % (p1_score, evaluator.class_to_string(p1_class)))
     Player 1 hand rank = 6330 (High Card)
 
-    >>> print "Player 2 hand rank = %d (%s)\n" % (p2_score, evaluator.class_to_string(p2_class))
+    >>> print("Player 2 hand rank = %d (%s)\n" % (p2_score, evaluator.class_to_string(p2_class)))
     Player 2 hand rank = 1609 (Straight)
 
 or, coolest of all, get a blow-by-blow analysis of the stages of the game with relation to hand strength:
@@ -118,7 +118,7 @@ or, coolest of all, get a blow-by-blow analysis of the stages of the game with r
     ========== HAND OVER ==========
     Player 2 is the winner with a Straight
 
-And that's Deuces, yo. 
+And that's Deuces, yo.
 
 ## Performance
 
@@ -143,11 +143,11 @@ Here are the results evaluating 10,000 random 5, 6, and 7 card boards:
 
 Compared to [`pokerhand-eval`](https://github.com/aliang/pokerhand-eval), Deuces is 2400x faster on 5 card evaluation, and drops to 300x faster on 7 card evaluation.
 
-However, [`SpecialKEval`](https://github.com/SpecialK/SpecialKEval/) reigns supreme, with an impressive nearly 400k evals / sec (a factor of ~1.7 improvement over Deuces) for 5 cards, and an impressive 140k /sec on 7 cards (factor of 10). 
+However, [`SpecialKEval`](https://github.com/SpecialK/SpecialKEval/) reigns supreme, with an impressive nearly 400k evals / sec (a factor of ~1.7 improvement over Deuces) for 5 cards, and an impressive 140k /sec on 7 cards (factor of 10).
 
-For poker hand evaluation in Python, if you desire a cleaner user interface and more readable and adaptable code, I recommend Deuces, because if you *really* need speed, you should be using C anyway. The extra 10x on 7 cards with SpecialK won't get you much more in terms of Monte Carlo simulations, and SpecialK's 5 card evals are within a factor of 2 of Deuces's evals/s. 
+For poker hand evaluation in Python, if you desire a cleaner user interface and more readable and adaptable code, I recommend Deuces, because if you *really* need speed, you should be using C anyway. The extra 10x on 7 cards with SpecialK won't get you much more in terms of Monte Carlo simulations, and SpecialK's 5 card evals are within a factor of 2 of Deuces's evals/s.
 
-For C/C++, I'd recommand [`pokerstove`](https://github.com/andrewprock/pokerstove), as its hyperoptimized C++ Boost routines can do 10+ million evals/s. 
+For C/C++, I'd recommand [`pokerstove`](https://github.com/andrewprock/pokerstove), as its hyperoptimized C++ Boost routines can do 10+ million evals/s.
 
 ## License
 
