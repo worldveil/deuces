@@ -1,10 +1,10 @@
-from card import Card
-from hand_evaluator import HandEvaluator
+from deuces import Card
+from deuces.evaluator import Evaluator
 import time
 import random
 
-def setup(n):
 
+def setup(n):
     hands = []
     boards = []
 
@@ -35,9 +35,9 @@ cumtime = 0.0
 boards, hands = setup(N)
 for i in range(len(boards)):
     start = time.time()
-    HandEvaluator.evaluate_hand(hands[i], boards[i])
+    Evaluator.evaluate_hand(hands[i], boards[i])
     cumtime += (time.time() - start)
 
 avg = float(cumtime / N)
-print "[*] Pokerhand-eval: Average time per evaluation: %f" % avg
-print "[*] Pokerhand-eval: Evaluations per second = %f" % (1.0 / avg)
+print("[*] Pokerhand-eval: Average time per evaluation: %f" % avg)
+print("[*] Pokerhand-eval: Evaluations per second = %f" % (1.0 / avg))

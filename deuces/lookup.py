@@ -1,15 +1,15 @@
 import itertools
-from card import Card
+from deuces.card import Card
 
 class LookupTable(object):
     """
     Number of Distinct Hand Values:
 
-    Straight Flush   10 
+    Straight Flush   10
     Four of a Kind   156      [(13 choose 2) * (2 choose 1)]
     Full Houses      156      [(13 choose 2) * (2 choose 1)]
     Flush            1277     [(13 choose 5) - 10 straight flushes]
-    Straight         10 
+    Straight         10
     Three of a Kind  858      [(13 choose 3) * (3 choose 1)]
     Two Pair         858      [(13 choose 3) * (3 choose 2)]
     One Pair         2860     [(13 choose 4) * (4 choose 1)]
@@ -26,7 +26,7 @@ class LookupTable(object):
     """
     MAX_STRAIGHT_FLUSH  = 10
     MAX_FOUR_OF_A_KIND  = 166
-    MAX_FULL_HOUSE      = 322 
+    MAX_FULL_HOUSE      = 322
     MAX_FLUSH           = 1599
     MAX_STRAIGHT        = 1609
     MAX_THREE_OF_A_KIND = 2467
@@ -73,7 +73,7 @@ class LookupTable(object):
 
     def flushes(self):
         """
-        Straight flushes and flushes. 
+        Straight flushes and flushes.
 
         Lookup is done on 13 bit integer (2^13 > 7462):
         xxxbbbbb bbbbbbbb => integer hand index
@@ -100,7 +100,7 @@ class LookupTable(object):
 
         # 1277 = number of high cards
         # 1277 + len(str_flushes) is number of hands with all cards unique rank
-        for i in xrange(1277 + len(straight_flushes) - 1): # we also iterate over SFs
+        for i in range(1277 + len(straight_flushes) - 1): # we also iterate over SFs
             # pull the next flush pattern from our generator
             f = next(gen)
 
@@ -108,7 +108,7 @@ class LookupTable(object):
             # straight flush, do not add it
             notSF = True
             for sf in straight_flushes:
-                # if f XOR sf == 0, then bit pattern 
+                # if f XOR sf == 0, then bit pattern
                 # is same, and we should not add
                 if not f ^ sf:
                     notSF = False
@@ -140,12 +140,12 @@ class LookupTable(object):
 
         # we can reuse these bit sequences for straights
         # and high cards since they are inherently related
-        # and differ only by context 
+        # and differ only by context
         self.straight_and_highcards(straight_flushes, flushes)
 
     def straight_and_highcards(self, straights, highcards):
         """
-        Unique five card sets. Straights and highcards. 
+        Unique five card sets. Straights and highcards.
 
         Reuses bit sequences from flush calculations.
         """
@@ -166,7 +166,7 @@ class LookupTable(object):
         """
         Pair, Two Pair, Three of a Kind, Full House, and 4 of a Kind.
         """
-        backwards_ranks = range(len(Card.INT_RANKS) - 1, -1, -1)
+        backwards_ranks = list(range(len(Card.INT_RANKS) - 1, -1, -1))
 
         # 1) Four of a Kind
         rank = LookupTable.MAX_STRAIGHT_FLUSH + 1
@@ -181,7 +181,7 @@ class LookupTable(object):
                 product = Card.PRIMES[i]**4 * Card.PRIMES[k]
                 self.unsuited_lookup[product] = rank
                 rank += 1
-        
+
         # 2) Full House
         rank = LookupTable.MAX_FOUR_OF_A_KIND + 1
 
@@ -252,7 +252,7 @@ class LookupTable(object):
         Writes lookup table to disk
         """
         with open(filepath, 'w') as f:
-            for prime_prod, rank in table.iteritems():
+            for prime_prod, rank in table.items():
                 f.write(str(prime_prod) +","+ str(rank) + '\n')
 
     def get_lexographically_next_bit_sequence(self, bits):
@@ -260,13 +260,13 @@ class LookupTable(object):
         Bit hack from here:
         http://www-graphics.stanford.edu/~seander/bithacks.html#NextBitPermutation
 
-        Generator even does this in poker order rank 
+        Generator even does this in poker order rank
         so no need to sort when done! Perfect.
         """
-        t = (bits | (bits - 1)) + 1 
-        next = t | ((((t & -t) / (bits & -bits)) >> 1) - 1)  
+        t = (bits | (bits - 1)) + 1
+        next = t | ((((t & -t) // (bits & -bits)) >> 1) - 1)
         yield next
         while True:
-            t = (next | (next - 1)) + 1 
-            next = t | ((((t & -t) / (next & -next)) >> 1) - 1)
+            t = (next | (next - 1)) + 1
+            next = t | ((((t & -t) // (next & -next)) >> 1) - 1)
             yield next
