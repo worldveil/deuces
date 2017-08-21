@@ -149,6 +149,33 @@ For poker hand evaluation in Python, if you desire a cleaner user interface and 
 
 For C/C++, I'd recommand [`pokerstove`](https://github.com/andrewprock/pokerstove), as its hyperoptimized C++ Boost routines can do 10+ million evals/s. 
 
+## Testing
+
+You can run the tests by:
+
+    python setup.py test
+
+Alternatively, install the required packages:
+
+    pip install -r requirements-test.txt
+
+and then:
+
+    bash-3.2$ pytest deuces
+    === test session starts ===
+    platform darwin -- Python 2.7.13, pytest-3.2.1, py-1.4.34, pluggy-0.4.0
+    rootdir: /Users/misha/git/deuces, inifile:
+    plugins: hypothesis-3.19.0, cov-2.5.1
+    collected 1 item
+
+    deuces/test_deuces.py .
+
+    === 1 passed in 0.05 seconds ===
+
+To obtain test coverage:
+
+    pytest deuces --cov-report html:gitignore/coverage --cov=deuces deucet deuces --cov-report html:gitignore/coverage --cov=deuces deuces
+
 ## License
 
 Copyright (c) 2013 Will Drevo
