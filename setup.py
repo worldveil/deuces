@@ -20,5 +20,10 @@ setup(
         'Intended Audience :: Science/Research',
         'License :: OSI Approved :: MIT License',
         'Topic :: Games/Entertainment'
-    ]
+    ],
+    #
+    # https://docs.pytest.org/en/latest/goodpractices.html#integrating-with-setuptools-python-setup-py-test-pytest-runner
+    #
+    setup_requires=['pytest-runner'],
+    tests_require=['mock', 'pytest', 'pytest-cov']
 )
