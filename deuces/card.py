@@ -196,7 +196,7 @@ class Card ():
         """
         Expects a single integer as input
         """
-        print Card.int_to_pretty_str(card_int)
+        print(Card.int_to_pretty_str(card_int))
 
     @staticmethod
     def print_pretty_cards(card_ints):
@@ -211,4 +211,4 @@ class Card ():
             else:
                 output += Card.int_to_pretty_str(c) + " "
     
-        print output
+        print(output)
