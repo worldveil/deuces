@@ -1,3 +1,3 @@
-from card import Card 
-from deck import Deck 
-from evaluator import Evaluator 
+from .card import Card 
+from .deck import Deck 
+from .evaluator import Evaluator 
