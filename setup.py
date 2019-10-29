@@ -12,6 +12,7 @@ setup(
     author='Will Drevo',
     url='https://github.com/worldveil/deuces',
     license='MIT',
+    python_requires='<3',
     packages=['deuces'],
     classifiers=[
         'Development Status :: 3 - Alpha',
