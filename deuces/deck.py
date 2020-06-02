@@ -1,5 +1,6 @@
 from random import shuffle
-from card import Card
+from .card import Card
+
 
 class Deck:
     """
@@ -7,6 +8,7 @@ class Deck:
     deck with the list of unique card integers. Each object instantiated simply
     makes a copy of this object and shuffles it. 
     """
+
     _FULL_DECK = []
 
     def __init__(self):
@@ -36,7 +38,7 @@ class Deck:
 
         # create the standard 52 card deck
         for rank in Card.STR_RANKS:
-            for suit,val in Card.CHAR_SUIT_TO_INT_SUIT.iteritems():
+            for suit, val in Card.CHAR_SUIT_TO_INT_SUIT.items():
                 Deck._FULL_DECK.append(Card.new(rank + suit))
 
         return list(Deck._FULL_DECK)
