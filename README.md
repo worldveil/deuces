@@ -7,8 +7,22 @@ A pure Python poker hand evaluation library
     
 ## Installation
 
+```bash
+pip install deuces
+
+OR
+
+git clone git@github.com:worldveil/deuces.git ./deuces
+cd ./deuces
+python3.10 -m venv poker_env
+source poker_env/bin/activate
+pip install -r requirements.txt
 ```
-$ pip install deuces
+
+## Running tests
+
+```bash
+python -m pytest
 ```
 
 ## Implementation notes
@@ -52,7 +66,7 @@ Pretty print card integers to the terminal:
     >>> Card.print_pretty_cards(board + hand)
       [ A ❤ ] , [ K ♦ ] , [ J ♣ ] , [ Q ♠ ] , [ T ❤ ] 
 
-If you have [`termacolor`](http://pypi.python.org/pypi/termcolor) installed, they will be colored as well. 
+If you have [`termcolor`](http://pypi.python.org/pypi/termcolor) installed, they will be colored as well. 
 
 Otherwise move straight to evaluating your hand strength:
 ```python
