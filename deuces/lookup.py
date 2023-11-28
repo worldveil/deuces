@@ -1,5 +1,5 @@
 import itertools
-from card import Card
+from deuces.card import Card
 
 class LookupTable(object):
     """
@@ -100,7 +100,7 @@ class LookupTable(object):
 
         # 1277 = number of high cards
         # 1277 + len(str_flushes) is number of hands with all cards unique rank
-        for i in xrange(1277 + len(straight_flushes) - 1): # we also iterate over SFs
+        for i in range(1277 + len(straight_flushes) - 1): # we also iterate over SFs
             # pull the next flush pattern from our generator
             f = next(gen)
 
@@ -175,7 +175,7 @@ class LookupTable(object):
         for i in backwards_ranks:
 
             # and for each possible kicker rank
-            kickers = backwards_ranks[:]
+            kickers = list(backwards_ranks[:])
             kickers.remove(i)
             for k in kickers:
                 product = Card.PRIMES[i]**4 * Card.PRIMES[k]
@@ -189,7 +189,7 @@ class LookupTable(object):
         for i in backwards_ranks:
 
             # and for each choice of pair rank
-            pairranks = backwards_ranks[:]
+            pairranks = list(backwards_ranks[:])
             pairranks.remove(i)
             for pr in pairranks:
                 product = Card.PRIMES[i]**3 * Card.PRIMES[pr]**2
@@ -202,7 +202,7 @@ class LookupTable(object):
         # pick three of one rank
         for r in backwards_ranks:
 
-            kickers = backwards_ranks[:]
+            kickers = list(backwards_ranks[:])
             kickers.remove(r)
             gen = itertools.combinations(kickers, 2)
 
@@ -220,7 +220,7 @@ class LookupTable(object):
         for tp in tpgen:
 
             pair1, pair2 = tp
-            kickers = backwards_ranks[:]
+            kickers = list(backwards_ranks[:])
             kickers.remove(pair1)
             kickers.remove(pair2)
             for kicker in kickers:
@@ -235,7 +235,7 @@ class LookupTable(object):
         # choose a pair
         for pairrank in backwards_ranks:
 
-            kickers = backwards_ranks[:]
+            kickers = list(backwards_ranks[:])
             kickers.remove(pairrank)
             kgen = itertools.combinations(kickers, 3)
 
@@ -264,9 +264,9 @@ class LookupTable(object):
         so no need to sort when done! Perfect.
         """
         t = (bits | (bits - 1)) + 1 
-        next = t | ((((t & -t) / (bits & -bits)) >> 1) - 1)  
+        next = t | ((int((t & -t) / (bits & -bits)) >> 1) - 1)
         yield next
         while True:
             t = (next | (next - 1)) + 1 
-            next = t | ((((t & -t) / (next & -next)) >> 1) - 1)
+            next = t | ((int((t & -t) / (next & -next)) >> 1) - 1)
             yield next

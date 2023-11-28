@@ -42,11 +42,17 @@ class Card ():
 
     # for pretty printing
     PRETTY_SUITS = {
-        1 : u"\u2660".encode('utf-8'), # spades
-        2 : u"\u2764".encode('utf-8'), # hearts
-        4 : u"\u2666".encode('utf-8'), # diamonds
-        8 : u"\u2663".encode('utf-8') # clubs
+        1: u"\u2660",  # spades
+        2: u"\u2764",  # hearts
+        4: u"\u2666",  # diamonds
+        8: u"\u2663"  # clubs
     }
+    # PRETTY_SUITS = {
+    #     1 : u"\u2660".encode('utf-8'), # spades
+    #     2 : u"\u2764".encode('utf-8'), # hearts
+    #     4 : u"\u2666".encode('utf-8'), # diamonds
+    #     8 : u"\u2663".encode('utf-8') # clubs
+    # }
 
      # hearts and diamonds
     PRETTY_REDS = [2, 4]
@@ -196,7 +202,7 @@ class Card ():
         """
         Expects a single integer as input
         """
-        print Card.int_to_pretty_str(card_int)
+        print(Card.int_to_pretty_str(card_int))
 
     @staticmethod
     def print_pretty_cards(card_ints):
@@ -211,4 +217,4 @@ class Card ():
             else:
                 output += Card.int_to_pretty_str(c) + " "
     
-        print output
+        print(output)
