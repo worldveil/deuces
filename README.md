@@ -10,7 +10,7 @@ A pure Python poker hand evaluation library
 ```bash
 pip install deuces
 
-OR
+# OR...
 
 git clone git@github.com:worldveil/deuces.git ./deuces
 cd ./deuces
@@ -20,6 +20,8 @@ pip install -r requirements.txt
 ```
 
 ## Running tests
+
+These should be much more exhaustive, but for now, run:
 
 ```bash
 python -m pytest
@@ -41,8 +43,8 @@ http://willdrevo.com/ (haven't posted yet)
 Deuces is easy to set up and use. 
 
 ```python
->>> from deuces import Card
->>> card = Card.new('Qh')
+from deuces import Card
+card = Card.new('Qh')
 ```
 
 Card objects are represented as integers to keep Deuces performant and lightweight. 
@@ -50,20 +52,20 @@ Card objects are represented as integers to keep Deuces performant and lightweig
 Now let's create the board and an example Texas Hold'em hand:
 
 ```python
->>> board = [
->>>     Card.new('Ah'),
->>>     Card.new('Kd'),
->>>     Card.new('Jc')
->>> ]
->>> hand = [
->>>    Card.new('Qs'),
->>>    Card.new('Th')
->>> ]
+board = [
+    Card.new('Ah'),
+    Card.new('Kd'),
+    Card.new('Jc')
+]
+hand = [
+   Card.new('Qs'),
+   Card.new('Th')
+]
 ```
 
 Pretty print card integers to the terminal: 
 
-    >>> Card.print_pretty_cards(board + hand)
+    Card.print_pretty_cards(board + hand)
       [ A ❤ ] , [ K ♦ ] , [ J ♣ ] , [ Q ♠ ] , [ T ❤ ] 
 
 If you have [`termcolor`](http://pypi.python.org/pypi/termcolor) installed, they will be colored as well. 
@@ -72,7 +74,7 @@ Otherwise move straight to evaluating your hand strength:
 ```python
 >>> from deuces import Evaluator
 >>> evaluator = Evaluator()
->>> print evaluator.evaluate(board, hand)
+>>> print(evaluator.evaluate(board, hand))
 1600
 ```
 
@@ -80,11 +82,11 @@ Hand strength is valued on a scale of 1 to 7462, where 1 is a Royal Flush and 74
 
 If you want to deal out cards randomly from a deck, you can also do that with Deuces:
 ```python
->>> from deuces import Deck
->>> deck = Deck()
->>> board = deck.draw(5)
->>> player1_hand = deck.draw(2)
->>> player2_hand = deck.draw(2)
+from deuces import Deck
+deck = Deck()
+board = deck.draw(5)
+player1_hand = deck.draw(2)
+player2_hand = deck.draw(2)
 ```
 and print them:
 
@@ -97,17 +99,17 @@ and print them:
 
 Let's evaluate both hands strength, and then bin them into classes, one for each hand type (High Card, Pair, etc)
 ```python
->>> p1_score = evaluator.evaluate(board, player1_hand)
->>> p2_score = evaluator.evaluate(board, player2_hand)
->>> p1_class = evaluator.get_rank_class(p1_score)
->>> p2_class = evaluator.get_rank_class(p2_score)
+p1_score = evaluator.evaluate(board, player1_hand)
+p2_score = evaluator.evaluate(board, player2_hand)
+p1_class = evaluator.get_rank_class(p1_score)
+p2_class = evaluator.get_rank_class(p2_score)
 ```
 or get a human-friendly string to describe the score,
 
-    >>> print "Player 1 hand rank = %d (%s)\n" % (p1_score, evaluator.class_to_string(p1_class))
+    >>> print("Player 1 hand rank = %d (%s)\n" % (p1_score, evaluator.class_to_string(p1_class)))
     Player 1 hand rank = 6330 (High Card)
 
-    >>> print "Player 2 hand rank = %d (%s)\n" % (p2_score, evaluator.class_to_string(p2_class))
+    >>> print("Player 2 hand rank = %d (%s)\n" % (p2_score, evaluator.class_to_string(p2_class)))
     Player 2 hand rank = 1609 (Straight)
 
 or, coolest of all, get a blow-by-blow analysis of the stages of the game with relation to hand strength:
@@ -171,7 +173,7 @@ You can run the tests by:
 
 Alternatively, install the required packages:
 
-    pip install -r requirements-test.txt
+    pip install -r requirements.txt
 
 and then:
 
@@ -188,7 +190,7 @@ and then:
 
 To obtain test coverage:
 
-    pytest deuces --cov-report html:gitignore/coverage --cov=deuces deucet deuces --cov-report html:gitignore/coverage --cov=deuces deuces
+    pytest deuces --cov-report html:gitignore/coverage --cov=deuces deuces deuces --cov-report html:gitignore/coverage --cov=deuces deuces
 
 ## License
 
