@@ -7,8 +7,22 @@ A pure Python poker hand evaluation library
     
 ## Installation
 
+```bash
+pip install deuces
+
+OR
+
+git clone git@github.com:worldveil/deuces.git ./deuces
+cd ./deuces
+python3.10 -m venv poker_env
+source poker_env/bin/activate
+pip install -r requirements.txt
 ```
-$ pip install deuces
+
+## Running tests
+
+```bash
+python -m pytest
 ```
 
 ## Implementation notes
@@ -52,7 +66,7 @@ Pretty print card integers to the terminal:
     >>> Card.print_pretty_cards(board + hand)
       [ A ❤ ] , [ K ♦ ] , [ J ♣ ] , [ Q ♠ ] , [ T ❤ ] 
 
-If you have [`termacolor`](http://pypi.python.org/pypi/termcolor) installed, they will be colored as well. 
+If you have [`termcolor`](http://pypi.python.org/pypi/termcolor) installed, they will be colored as well. 
 
 Otherwise move straight to evaluating your hand strength:
 ```python
@@ -148,6 +162,33 @@ However, [`SpecialKEval`](https://github.com/SpecialK/SpecialKEval/) reigns supr
 For poker hand evaluation in Python, if you desire a cleaner user interface and more readable and adaptable code, I recommend Deuces, because if you *really* need speed, you should be using C anyway. The extra 10x on 7 cards with SpecialK won't get you much more in terms of Monte Carlo simulations, and SpecialK's 5 card evals are within a factor of 2 of Deuces's evals/s. 
 
 For C/C++, I'd recommand [`pokerstove`](https://github.com/andrewprock/pokerstove), as its hyperoptimized C++ Boost routines can do 10+ million evals/s. 
+
+## Testing
+
+You can run the tests by:
+
+    python setup.py test
+
+Alternatively, install the required packages:
+
+    pip install -r requirements-test.txt
+
+and then:
+
+    bash-3.2$ pytest deuces
+    === test session starts ===
+    platform darwin -- Python 2.7.13, pytest-3.2.1, py-1.4.34, pluggy-0.4.0
+    rootdir: /Users/misha/git/deuces, inifile:
+    plugins: hypothesis-3.19.0, cov-2.5.1
+    collected 1 item
+
+    deuces/test_deuces.py .
+
+    === 1 passed in 0.05 seconds ===
+
+To obtain test coverage:
+
+    pytest deuces --cov-report html:gitignore/coverage --cov=deuces deucet deuces --cov-report html:gitignore/coverage --cov=deuces deuces
 
 ## License
 

@@ -1,0 +1,6 @@
+termcolor
+
+# tests
+mock
+pytest
+pytest-cov
