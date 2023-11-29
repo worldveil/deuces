@@ -192,6 +192,18 @@ To obtain test coverage:
 
     pytest deuces --cov-report html:gitignore/coverage --cov=deuces deuces deuces --cov-report html:gitignore/coverage --cov=deuces deuces
 
+## Updating PyPi
+
+First change the version in `setup.py`, then run:
+
+```bash
+pip install setuptools twine wheel
+cd deuces
+python setup.py sdist bdist_wheel
+twine check dist/*
+twine upload dist/*
+```
+
 ## License
 
 Copyright (c) 2013 Will Drevo

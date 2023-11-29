@@ -9,6 +9,7 @@ setup(
     version='0.2.1',
     description=__doc__,
     long_description=open('README.md').read(),
+    long_description_content_type='text/markdown',
     author='Will Drevo',
     url='https://github.com/worldveil/deuces',
     license='MIT',
