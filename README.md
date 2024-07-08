@@ -78,7 +78,7 @@ Otherwise move straight to evaluating your hand strength:
 1600
 ```
 
-Hand strength is valued on a scale of 1 to 7462, where 1 is a Royal Flush and 7462 is unsuited 7-5-4-3-2, as there are only 7642 distinctly ranked hands in poker. Once again, refer to my blog post for a more mathematically complete explanation of why this is so. 
+Hand strength is valued on a scale of 1 to 7462, where 1 is a Royal Flush and 7462 is unsuited 7-5-4-3-2, as there are only 7462 distinctly ranked hands in poker. Once again, refer to my blog post for a more mathematically complete explanation of why this is so. 
 
 If you want to deal out cards randomly from a deck, you can also do that with Deuces:
 ```python
